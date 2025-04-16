@@ -21,7 +21,8 @@ import java.util.UUID;
 public interface ShoppingStoreOperations {
 
     @GetMapping
-    public List<ProductDto> getProducts(@RequestParam(name = "category") @NotNull ProductCategory category, Pageable pageable);
+    public List<ProductDto> getProducts(@RequestParam(name = "category") @NotNull ProductCategory category,
+                                        Pageable pageable);
 
     @PutMapping
     public ProductDto createNewProduct(@RequestBody @Valid ProductDto productDto);
