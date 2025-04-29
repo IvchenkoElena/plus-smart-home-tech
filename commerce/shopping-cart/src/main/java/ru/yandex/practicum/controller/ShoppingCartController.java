@@ -58,4 +58,9 @@ public class ShoppingCartController implements ShoppingCartOperations {
         log.info("Возвращаем корзину: {}", response);
         return response;
     }
+
+    @Override
+    public String getUsernameById(UUID cartId) {
+        return shoppingCartService.getUsernameById(cartId);
+    }
 }

@@ -18,11 +18,25 @@ public class ErrorHandler {
         return new ApiError(HttpStatus.NOT_FOUND, "Product not found", e.getMessage());
     }
 
-    @ExceptionHandler({NoProductsInShoppingCartException. class, SpecifiedProductAlreadyInWarehouseException.class, ProductInShoppingCartLowQuantityInWarehouse.class, NoSpecifiedProductInWarehouseException.class})
+    @ExceptionHandler({NoCartException.class, NoProductsInShoppingCartException. class, SpecifiedProductAlreadyInWarehouseException.class, NoOrderFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleBadRequestException(RuntimeException e) {
         log.warn("400 - BAD_REQUEST");
         return new ApiError(HttpStatus.BAD_REQUEST, "Bad request", e.getMessage());
+    }
+
+    @ExceptionHandler({ProductInShoppingCartLowQuantityInWarehouse.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleProductInShoppingCartLowQuantityInWarehouseException(RuntimeException e) {
+        log.warn("400 - BAD_REQUEST");
+        return new ApiError(HttpStatus.BAD_REQUEST, "ProductInShoppingCartLowQuantityInWarehouse", e.getMessage());
+    }
+
+    @ExceptionHandler({NoSpecifiedProductInWarehouseException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiError handleNoSpecifiedProductInWarehouseException(RuntimeException e) {
+        log.warn("404 - NOT_FOUND");
+        return new ApiError(HttpStatus.NOT_FOUND, "NoSpecifiedProductInWarehouseException", e.getMessage());
     }
 
     @ExceptionHandler({NotAuthorizedUserException.class})

@@ -8,9 +8,14 @@ import ru.yandex.practicum.api.WarehouseOperations;
 import ru.yandex.practicum.dto.shoppindCart.ShoppingCartDto;
 import ru.yandex.practicum.dto.warehouse.AddProductToWarehouseRequest;
 import ru.yandex.practicum.dto.warehouse.AddressDto;
+import ru.yandex.practicum.dto.warehouse.AssemblyProductsForOrderRequest;
 import ru.yandex.practicum.dto.warehouse.BookedProductsDto;
 import ru.yandex.practicum.dto.warehouse.NewProductInWarehouseRequest;
+import ru.yandex.practicum.dto.warehouse.ShippedToDeliveryRequest;
 import ru.yandex.practicum.service.WarehouseService;
+
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @Slf4j
@@ -39,6 +44,28 @@ public class WarehouseController implements WarehouseOperations {
         log.info("POST /api/v1/warehouse/add - Принять товар на склад: {}", request);
         warehouseService.addProductToWarehouse(request);
         log.info("Товар принят на склад: {}", request);
+    }
+
+    @Override
+    public BookedProductsDto assemblyProductsForOrder(AssemblyProductsForOrderRequest request) {
+        log.info("POST /api/v1/warehouse/assembly - Собрать товары products{} к заказу orderId={} для подготовки к отправке", request.getProducts(), request.getOrderId());
+        warehouseService.assemblyProductsForOrder(request);
+        log.info("Товары products{} к заказу orderId={} собраны для подготовки к отправке", request.getProducts(), request.getOrderId());
+        return null;
+    }
+
+    @Override
+    public void shippedToDelivery(ShippedToDeliveryRequest request) {
+        log.info("POST /api/v1/warehouse/shipped - Передать товары в доставку: {}", request);
+        warehouseService.shippedToDelivery(request);
+        log.info("Товары переданы на доставку: {}", request);
+    }
+
+    @Override
+    public void acceptReturn(Map<UUID, Integer> productsToReturn) {
+        log.info("POST /api/v1/warehouse/return - Принять возврат товаров на склад: {}", productsToReturn);
+        warehouseService.acceptReturn(productsToReturn);
+        log.info("Товар принят на склад: {}", productsToReturn);
     }
 
     @Override

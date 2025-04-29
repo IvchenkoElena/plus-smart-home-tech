@@ -21,21 +21,22 @@ import java.util.UUID;
 public interface ShoppingStoreOperations {
 
     @GetMapping
-    public List<ProductDto> getProducts(@RequestParam(name = "category") @NotNull ProductCategory category, Pageable pageable);
+    List<ProductDto> getProducts(@RequestParam(name = "category") @NotNull ProductCategory category,
+                                 Pageable pageable);
 
     @PutMapping
-    public ProductDto createNewProduct(@RequestBody @Valid ProductDto productDto);
+    ProductDto createNewProduct(@RequestBody @Valid ProductDto productDto);
 
     @PostMapping
-    public ProductDto updateProduct(@RequestBody @Valid ProductDto productDto);
+    ProductDto updateProduct(@RequestBody @Valid ProductDto productDto);
 
     @PostMapping("/removeProductFromStore")
-    public boolean removeProductFromStore(@RequestBody @NotNull UUID productId);
+    boolean removeProductFromStore(@RequestBody @NotNull UUID productId);
 
     @PostMapping("quantityState")
-    public boolean setProductQuantityState(@RequestBody @Valid SetProductQuantityStateRequest setProductQuantityStateRequest);
+    boolean setProductQuantityState(@RequestBody @Valid SetProductQuantityStateRequest setProductQuantityStateRequest);
 
     @GetMapping("{productId}")
-    public ProductDto getProduct(@PathVariable @NotNull UUID productId);
+    ProductDto getProduct(@PathVariable @NotNull UUID productId);
 
 }

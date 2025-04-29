@@ -19,20 +19,23 @@ import java.util.UUID;
 @FeignClient(name = "shopping-cart", path = "/api/v1/shopping-cart")
 public interface ShoppingCartOperations {
     @GetMapping
-    public ShoppingCartDto getShoppingCart(@RequestParam(name = "username") @NotNull String username);
+    ShoppingCartDto getShoppingCart(@RequestParam(name = "username") @NotNull String username);
 
     @PutMapping
-    public ShoppingCartDto addProductToShoppingCart(@RequestParam(name = "username") @NotNull String username,
-                                                    @RequestBody Map<UUID, Integer> products);
+    ShoppingCartDto addProductToShoppingCart(@RequestParam(name = "username") @NotNull String username,
+                                             @RequestBody Map<UUID, Integer> products);
 
     @DeleteMapping
-    public void deactivateCurrentShoppingCart(@RequestParam(name = "username") @NotNull String username);
+    void deactivateCurrentShoppingCart(@RequestParam(name = "username") @NotNull String username);
 
     @PostMapping("/remove")
-    public ShoppingCartDto removeFromShoppingCart(@RequestParam(name = "username") @NotNull String username,
-                                                  @RequestBody List<UUID> products);
+    ShoppingCartDto removeFromShoppingCart(@RequestParam(name = "username") @NotNull String username,
+                                           @RequestBody List<UUID> products);
 
     @PostMapping("/change-quantity")
-    public ShoppingCartDto changeProductQuantity(@RequestParam(name = "username") @NotNull String username,
-                                                 @RequestBody @Valid ChangeProductQuantityRequest request);
+    ShoppingCartDto changeProductQuantity(@RequestParam(name = "username") @NotNull String username,
+                                          @RequestBody @Valid ChangeProductQuantityRequest request);
+
+    @GetMapping("/name")
+    String getUsernameById(@RequestParam @NotNull UUID cartId);
 }
